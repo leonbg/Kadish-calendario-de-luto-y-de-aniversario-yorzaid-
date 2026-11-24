@@ -1,6 +1,41 @@
 import type { Auth, GoogleAuthProvider, User } from 'firebase/auth';
-import firebaseConfig from '../../firebase-applet-config.json';
 import { KaddishPrayer } from '../types/kaddish';
+
+interface FirebaseClientConfig {
+  apiKey?: string;
+  authDomain?: string;
+  projectId?: string;
+  storageBucket?: string;
+  messagingSenderId?: string;
+  appId?: string;
+}
+
+const localConfigModules = import.meta.glob('../../firebase-applet-config.json', {
+  eager: true,
+}) as Record<string, { default?: FirebaseClientConfig }>;
+
+function resolveFirebaseConfig(): FirebaseClientConfig | null {
+  const envConfig: FirebaseClientConfig = {
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY?.trim(),
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN?.trim(),
+    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID?.trim(),
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET?.trim(),
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID?.trim(),
+    appId: import.meta.env.VITE_FIREBASE_APP_ID?.trim(),
+  };
+
+  if (envConfig.apiKey && envConfig.projectId) {
+    return envConfig;
+  }
+
+  const localModule = Object.values(localConfigModules)[0];
+  const localConfig = localModule?.default;
+  if (localConfig?.apiKey && localConfig?.projectId) {
+    return localConfig;
+  }
+
+  return null;
+}
 
 // Scopes for Google Drive, Google Docs and Google Calendar
 export const WORKSPACE_SCOPES = [
@@ -16,6 +51,11 @@ let cachedAuth: Auth | null = null;
 let cachedProvider: GoogleAuthProvider | null = null;
 
 async function getFirebaseContext() {
+  const firebaseConfig = resolveFirebaseConfig();
+  if (!firebaseConfig) {
+    return null;
+  }
+
   try {
     const [{ initializeApp, getApps, getApp }, authMod] = await Promise.all([
       import('firebase/app'),
@@ -94,7 +134,9 @@ export const signInWithGoogle = async (): Promise<{
 } | null> => {
   const ctx = await getFirebaseContext();
   if (!ctx) {
-    throw new Error('El servicio de autenticación de Google no está disponible en este entorno.');
+    throw new Error(
+      'Configura las variables de entorno VITE_FIREBASE_* (en Ajustes → Secrets o .env.local) para habilitar el inicio de sesión con Google.'
+    );
   }
   try {
     isSigningIn = true;
@@ -218,9 +260,9 @@ export async function createKaddishGoogleDoc({
   bodyText += `------------------------------------------------------------\n`;
   bodyText += `Generado desde la aplicación Kadish y Yurzaid (Nusaj Sefaradí & Mizrají).\n`;
 
-  // 3. Insert text into the Google Doc
+  const safeDocumentId = encodeURIComponent(documentId);
   const updateRes = await fetch(
-    `https://docs.googleapis.com/v1/documents/${documentId}:batchUpdate`,
+    `https://docs.googleapis.com/v1/documents/${safeDocumentId}:batchUpdate`,
     {
       method: 'POST',
       headers: {
@@ -375,7 +417,7 @@ export async function loadHazkarotFromDrive(fileId: string): Promise<HazkaraReco
   }
 
   const res = await fetch(
-    `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`,
+    `https://www.googleapis.com/drive/v3/files/${encodeURIComponent(fileId)}?alt=media`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -406,7 +448,9 @@ export async function deleteDriveFile(fileId: string): Promise<void> {
     throw new Error('Debes iniciar sesión con Google.');
   }
 
-  const res = await fetch(`https://www.googleapis.com/drive/v3/files/${fileId}`, {
+  const res = await fetch(
+    `https://www.googleapis.com/drive/v3/files/${encodeURIComponent(fileId)}`,
+    {
     method: 'DELETE',
     headers: {
       Authorization: `Bearer ${token}`,
@@ -530,7 +574,7 @@ export async function deleteCalendarEvent(eventId: string): Promise<void> {
   }
 
   const res = await fetch(
-    `https://www.googleapis.com/calendar/v3/calendars/primary/events/${eventId}`,
+    `https://www.googleapis.com/calendar/v3/calendars/primary/events/${encodeURIComponent(eventId)}`,
     {
       method: 'DELETE',
       headers: {

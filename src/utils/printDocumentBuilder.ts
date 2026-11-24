@@ -320,16 +320,27 @@ export function buildPrintDocument(options: PrintDocumentOptions): PrintDocument
       })
     : null;
 
-  const hasDedication = Boolean(dedicationName || dedicationHebrewName || dedicationDate);
+  const escapeHtml = (value: string): string =>
+    value
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+
+  const safeDedicationName = escapeHtml(dedicationName.trim());
+  const safeDedicationHebrewName = escapeHtml(dedicationHebrewName.trim());
+  const safeDedicationDate = escapeHtml(dedicationDate.trim());
+  const hasDedication = Boolean(safeDedicationName || safeDedicationHebrewName || safeDedicationDate);
 
   const dedicationHtml = hasDedication
     ? `
     <div class="dedication-box">
       <div class="dedication-title">לְעִלּוּי נִשְׁמַת • EN MEMORIA / DEDICATORIA</div>
-      <div class="dedication-name">${dedicationName ? `<strong>${dedicationName}</strong>` : ''} ${
-        dedicationHebrewName ? `<span class="hebrew-name">(${dedicationHebrewName})</span>` : ''
+      <div class="dedication-name">${safeDedicationName ? `<strong>${safeDedicationName}</strong>` : ''} ${
+        safeDedicationHebrewName ? `<span class="hebrew-name">(${safeDedicationHebrewName})</span>` : ''
       }</div>
-      ${dedicationDate ? `<div class="dedication-date">Yurzaid / Fecha: ${dedicationDate}</div>` : ''}
+      ${safeDedicationDate ? `<div class="dedication-date">Yurzaid / Fecha: ${safeDedicationDate}</div>` : ''}
     </div>`
     : '';
 
@@ -768,7 +779,7 @@ export function buildPrintDocument(options: PrintDocumentOptions): PrintDocument
                 : ''
             }
           </div>
-          ${hasDedication ? `<div class="mini-dedication">לע״נ ${dedicationHebrewName || dedicationName}</div>` : ''}
+          ${hasDedication ? `<div class="mini-dedication">לע״נ ${safeDedicationHebrewName || safeDedicationName}</div>` : ''}
           ${
             useNusajComparison && isDerabanan && processedLinesB
               ? `
