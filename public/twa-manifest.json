@@ -1,0 +1,59 @@
+{
+  "packageId": "app.kadish.yurzaid",
+  "host": "ais-pre-p6croqebzy6vkcghti6zh7-550769722616.us-west2.run.app",
+  "name": "Kadish y Yurzaid",
+  "launcherName": "Kadish",
+  "display": "standalone",
+  "themeColor": "#B45309",
+  "themeColorDark": "#0C0A09",
+  "navigationColor": "#FDFBF7",
+  "navigationColorDark": "#0C0A09",
+  "navigationDividerColor": "#E7E5E4",
+  "navigationDividerColorDark": "#292524",
+  "backgroundColor": "#FDFBF7",
+  "enableNotifications": true,
+  "startUrl": "/",
+  "iconUrl": "https://ais-pre-p6croqebzy6vkcghti6zh7-550769722616.us-west2.run.app/pwa-512x512.png",
+  "maskableIconUrl": "https://ais-pre-p6croqebzy6vkcghti6zh7-550769722616.us-west2.run.app/pwa-maskable-512x512.png",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "path": "./android.keystore",
+    "alias": "android"
+  },
+  "appVersionName": "1.0.0",
+  "appVersionCode": 1,
+  "shortcuts": [
+    {
+      "name": "Kadish Yatom",
+      "shortName": "Yatom",
+      "url": "https://ais-pre-p6croqebzy6vkcghti6zh7-550769722616.us-west2.run.app/?kaddish=yatom",
+      "chosenIconUrl": "https://ais-pre-p6croqebzy6vkcghti6zh7-550769722616.us-west2.run.app/pwa-192x192.png"
+    },
+    {
+      "name": "Kadish Derabanán",
+      "shortName": "Derabanán",
+      "url": "https://ais-pre-p6croqebzy6vkcghti6zh7-550769722616.us-west2.run.app/?kaddish=derabanan",
+      "chosenIconUrl": "https://ais-pre-p6croqebzy6vkcghti6zh7-550769722616.us-west2.run.app/pwa-192x192.png"
+    },
+    {
+      "name": "Calculadora Yurzaid",
+      "shortName": "Calculadora",
+      "url": "https://ais-pre-p6croqebzy6vkcghti6zh7-550769722616.us-west2.run.app/?view=calculator",
+      "chosenIconUrl": "https://ais-pre-p6croqebzy6vkcghti6zh7-550769722616.us-west2.run.app/pwa-192x192.png"
+    }
+  ],
+  "generatorApp": "bubblewrap-cli",
+  "webManifestUrl": "https://ais-pre-p6croqebzy6vkcghti6zh7-550769722616.us-west2.run.app/manifest.json",
+  "fallbackType": "customtabs",
+  "features": {},
+  "alphaDependencies": {
+    "enabled": false
+  },
+  "enableSiteSettingsShortcut": true,
+  "isChromeOSOnly": false,
+  "isMetaQuest": false,
+  "minSdkVersion": 24,
+  "targetSdkVersion": 35,
+  "compileSdkVersion": 35,
+  "orientation": "portrait-primary"
+}

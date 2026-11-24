@@ -1,0 +1,7 @@
+{
+  "name": "Kadish y Yurzaid",
+  "description": "Aplicación para la lectura, audio y traducción interactiva de rezos y Kadish (Nusaj Sefaradi).",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+

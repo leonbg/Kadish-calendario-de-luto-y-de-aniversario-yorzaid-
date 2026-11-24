@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGradMask" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#78350f" />
+      <stop offset="50%" stop-color="#b45309" />
+      <stop offset="100%" stop-color="#d97706" />
+    </linearGradient>
+    <linearGradient id="goldGradMask" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef3c7" />
+      <stop offset="50%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#b45309" />
+    </linearGradient>
+    <linearGradient id="flameGradMask" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#ea580c" />
+      <stop offset="40%" stop-color="#f59e0b" />
+      <stop offset="80%" stop-color="#fef08a" />
+      <stop offset="100%" stop-color="#ffffff" />
+    </linearGradient>
+  </defs>
+
+  <!-- Full-bleed background for maskable safety -->
+  <rect width="512" height="512" fill="url(#bgGradMask)" />
+
+  <!-- Inner safe-zone grouped content (scaled into 75% center safe zone) -->
+  <g transform="translate(256, 260) scale(0.72)">
+    <!-- Open Book / Siddur Base -->
+    <path d="M-140,80 C-70,60 -20,85 0,110 C20,85 70,60 140,80 L140,160 C70,140 20,165 0,190 C-20,165 -70,140 -140,160 Z" fill="#ffffff" fill-opacity="0.95" />
+    <path d="M-140,80 C-70,60 -20,85 0,110 L0,190 C-20,165 -70,140 -140,160 Z" fill="#fef3c7" />
+    
+    <!-- Siddur Spine & Line Accents -->
+    <path d="M0,110 L0,190" stroke="#b45309" stroke-width="4" />
+    <path d="M-115,108 C-65,95 -25,112 -12,128" fill="none" stroke="#d97706" stroke-width="3" stroke-linecap="round" />
+    <path d="M-115,128 C-65,115 -25,132 -12,148" fill="none" stroke="#d97706" stroke-width="3" stroke-linecap="round" />
+    <path d="M115,108 C65,95 25,112 12,128" fill="none" stroke="#d97706" stroke-width="3" stroke-linecap="round" />
+    <path d="M115,128 C65,115 25,132 12,148" fill="none" stroke="#d97706" stroke-width="3" stroke-linecap="round" />
+
+    <!-- Memorial Flame (Ner Tamid / Yurzaid Flame) -->
+    <path d="M0,60 C-35,30 -50,-20 -20,-75 C-15,-85 -5,-100 0,-130 C5,-100 15,-85 20,-75 C50,-20 35,30 0,60 Z" fill="url(#flameGradMask)" />
+    <!-- Inner Flame Core -->
+    <path d="M0,45 C-18,25 -25,-10 -10,-45 C-7,-52 -2,-60 0,-80 C2,-60 7,-52 10,-45 C25,-10 18,25 0,45 Z" fill="#ffffff" opacity="0.9" />
+
+    <!-- Star of David / Magen David Subtle Watermark -->
+    <polygon points="0,-165 45,-90 -45,-90" fill="none" stroke="#fef3c7" stroke-width="3" stroke-opacity="0.4" />
+    <polygon points="0,-65 45,-140 -45,-140" fill="none" stroke="#fef3c7" stroke-width="3" stroke-opacity="0.4" />
+  </g>
+
+  <!-- Hebrew Inscription Arc -->
+  <text x="256" y="95" text-anchor="middle" font-family="serif" font-weight="bold" font-size="28" fill="#fef3c7" letter-spacing="3">קַדִּישׁ וְיָארְצַייט</text>
+  <!-- App Title Latin -->
+  <text x="256" y="445" text-anchor="middle" font-family="sans-serif" font-weight="bold" font-size="20" fill="#fde68a" letter-spacing="2">KADISH Y YURZAID</text>
+</svg>
